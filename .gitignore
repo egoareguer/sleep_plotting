@@ -1,0 +1,6 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+assets/.~lock.sleep_journal_13.04.2025.csv#
+.flake8
