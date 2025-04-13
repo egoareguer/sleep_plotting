@@ -37,8 +37,14 @@ def standardize_date_format(date_value, year_value):
             day, months = parts
             year = year_value
             return f"{day}/{months}/{year}"
-        elif len(parts) == 3:  # 3 parts mean in DD/MM/YYYY format already
-            return date_value
+        elif len(parts) == 3:
+            # 3 parts can mean in DD/MM/YYYY format already
+            # OR DD/MM/YY format
+            if len(parts[2]) == 4:
+                return date_value
+            elif len(parts[2]) == 2:
+                parts[2] = f"20{parts[2]}"
+                return (f"{parts[0]}/{parts[1]}/{parts[2]}")
     else:
         print("Called standardize_date_format with non-string date entry")
         exit
@@ -70,7 +76,13 @@ def update_next_date(cur_parts, next_parts, index):
         df.loc[index + 1, 'Date'] = "/".join(next_parts)
         return (next_parts)
     elif len(next_parts) == 3:
-        return (next_parts)
+        if len(next_parts[2]) == 4:
+            return (next_parts)
+        elif len(next_parts[2]) == 2:
+            # We have DD/MM/YY format; extend it to DD/MM/YYYY
+            next_parts[2] = f"20{next_parts[2]}"
+            df.loc[index + 1, 'Date'] = "/".join(next_parts)
+            return (next_parts)
     else:
         print("You doofus, handle anomalous cells.")
         exit
@@ -89,8 +101,10 @@ cur_parts = cur_day, cur_month, cur_year
 #   Each new year has at least one January entry
 #   We do not jump from a Jan to a new Jan month
 i = 1
+stop_index = len(df)  # We have to go off the initial length
+# As we will be dropping rows in the loop.
 anomalous_date_counter = 0
-while i < (len(df) - 1):
+while i < stop_index:
     next_date = df.at[i, 'Date']
     # Deal with empty lines:
     # Possibilies: No sleep with NUIT BLANCHE
