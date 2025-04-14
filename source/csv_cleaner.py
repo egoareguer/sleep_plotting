@@ -8,12 +8,11 @@ from pathlib import Path
         1) The sleep journal dates don't skip years
         2) Entries are chronologically sorted
 """
-# TODO change updates to use the pandas date format
-# NB: Each drop creates a whole new dataframe with how pandas works.
-# This is potentially inefficient if the .csv is like swiss cheese.
-# However, with few anomalies and a mere couple thousands of lines,
-# We can say it's fine.
-
+"""_summary_ TODO
+    I have backdated years due to libreoffice's autocomplete.
+    I need to change the cleaner script to address going back
+    in time as their signature.
+"""
 # Find sleep_journal file
 script_dir = Path(__file__).parent
 file_path = script_dir.parent / "assets" / "sleep_journal_13.04.2025.csv"
