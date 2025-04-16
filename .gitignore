@@ -2,5 +2,14 @@
 .venv/
 venv/
 ENV/
-assets/.~lock.sleep_journal_13.04.2025.csv#
+
+# Flake8 
 .flake8
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Only share Latest .pngs, .csvs... 
+assets/Archives 
