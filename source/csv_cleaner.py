@@ -15,7 +15,7 @@ from pathlib import Path
 """
 # Find sleep_journal file
 script_dir = Path(__file__).parent
-file_path = script_dir.parent / "assets" / "sleep_journal_13.04.2025.csv"
+file_path = script_dir.parent / "assets" / "sleep_journal.csv"
 
 df = pd.read_csv(file_path,
                  parse_dates=["Date"],
@@ -137,7 +137,7 @@ while i < stop_index:
     i += 1
 
 
-output_path = script_dir.parent / "assets" / "sleep_journal_13.04.2025_cleaned.csv"
+output_path = script_dir.parent / "assets" / "sleep_journal_cleaned.csv"
 df.to_csv(output_path, index=False)
 
 

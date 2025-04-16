@@ -13,3 +13,4 @@ __pycache__/
 
 # Only share Latest .pngs, .csvs... 
 assets/Archives 
+assets/.~lock.sleep_journal.csv#
