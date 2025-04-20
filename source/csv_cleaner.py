@@ -136,6 +136,27 @@ while i < stop_index:
 #    print(f"Line {i} treated.")
     i += 1
 
+df = df.reset_index(drop=True)  # Resetting indexes to be in order
+# Assumptions at this point:
+# 1) All Date entries are of format DD/MM/YYYY
+# 2) Date entries are chronologicaly sorted - none are out of order
+# Ergo, if backdating is detected, they are erroneous, and must be corrected
+
+# We now do a second pass to enforce years unroll one at a time.
+current_year = start_year
+current_month = None
+for j in range(len(df)):
+    next_date = df.at[j, 'Date']
+    next_parts = next_date.split("/")
+    next_day, next_month, next_year = next_parts
+    month_int = int(next_month)
+    if current_month is not None and month_int == 1 and int(current_month) == 12:
+        # In plain language: We are in the loop, at a Dec->Jan change
+        current_year += 1
+    if next_year != current_year:
+        # We brute force propagation unless already equal
+        df.loc[j, 'Date'] = f"{next_day}/{next_month}/{current_year}"
+    current_month = next_month
 
 output_path = script_dir.parent / "assets" / "sleep_journal_cleaned.csv"
 df.to_csv(output_path, index=False)
