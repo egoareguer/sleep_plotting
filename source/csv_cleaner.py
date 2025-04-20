@@ -9,9 +9,6 @@ from pathlib import Path
         2) Entries are chronologically sorted
 """
 """_summary_ TODO
-    I have backdated years due to libreoffice's autocomplete.
-    I need to change the cleaner script to address going back
-    in time as their signature.
 """
 # Find sleep_journal file
 script_dir = Path(__file__).parent
